@@ -1,5 +1,6 @@
 let device;
 let characteristic;
+let notifyCharacteristic;
 
 document.getElementById('connect').addEventListener('click', async () => {
     try {
@@ -10,6 +11,8 @@ document.getElementById('connect').addEventListener('click', async () => {
         const server = await device.gatt.connect();
         const service = await server.getPrimaryService('8cdd366e-7eb4-442d-973f-61e2fd4b56f0');
         characteristic = await service.getCharacteristic('dc994613-74f5-4c4f-b671-5a8d297f737a');
+        // Get the notify characteristic
+        notifyCharacteristic = await service.getCharacteristic('cc5e8e3a-f8e6-4889-8a18-9069272be2a5'); // Replace with the actual UUID
         document.getElementById('status').textContent = 'Connected';
         document.getElementById('status').style.color = 'green';
         // Enable the controls
@@ -23,12 +26,21 @@ document.getElementById('connect').addEventListener('click', async () => {
         document.getElementById('brightnessSlider').disabled = false;
         document.getElementById('speedSlider').disabled = false;
         document.getElementById('colorPicker').disabled = false;
+
+        // Start notifications
+        await notifyCharacteristic.startNotifications();
+        notifyCharacteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
     } catch (error) {
         console.error('Connection failed', error);
         document.getElementById('status').textContent = 'Disconnected';
         document.getElementById('status').style.color = 'red';
     }
 });
+
+function handleCharacteristicValueChanged(event) {
+    const value = new TextDecoder().decode(event.target.value);
+    document.getElementById('notifyValue').textContent = `Notify Value: ${value}`;
+}
 
 document.getElementById('sendCommand').addEventListener('click', async () => {
     const command = document.getElementById('terminal').value;
