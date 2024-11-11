@@ -7,7 +7,6 @@ document.getElementById('connect').addEventListener('click', async () => {
             acceptAllDevices: true,
             optionalServices: ['8cdd366e-7eb4-442d-973f-61e2fd4b56f0']
         });
-        if(device.gatt.connect) return;
         const server = await device.gatt.connect();
         const service = await server.getPrimaryService('8cdd366e-7eb4-442d-973f-61e2fd4b56f0');
         characteristic = await service.getCharacteristic('dc994613-74f5-4c4f-b671-5a8d297f737a');
