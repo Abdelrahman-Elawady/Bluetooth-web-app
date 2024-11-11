@@ -5,7 +5,7 @@ document.getElementById('scan').addEventListener('click', async () => {
     try {
         const devices = await navigator.bluetooth.requestDevice({
             acceptAllDevices: true,
-            optionalServices: ['your-service-uuid']
+            optionalServices: ['8cdd366e-7eb4-442d-973f-61e2fd4b56f0']
         });
         const deviceList = document.getElementById('deviceList');
         deviceList.innerHTML = '';
@@ -25,14 +25,17 @@ document.getElementById('connect').addEventListener('click', async () => {
         const deviceId = document.getElementById('deviceList').value;
         device = await navigator.bluetooth.requestDevice({
             filters: [{ id: deviceId }],
-            optionalServices: ['your-service-uuid']
+            optionalServices: ['8cdd366e-7eb4-442d-973f-61e2fd4b56f0']
         });
         const server = await device.gatt.connect();
-        const service = await server.getPrimaryService('your-service-uuid');
-        characteristic = await service.getCharacteristic('your-characteristic-uuid');
+        const service = await server.getPrimaryService('8cdd366e-7eb4-442d-973f-61e2fd4b56f0');
+        characteristic = await service.getCharacteristic('dc994613-74f5-4c4f-b671-5a8d297f737a');
         document.getElementById('status').textContent = 'Connected';
         document.getElementById('status').style.color = 'green';
         // Enable the controls
+        document.getElementById('reset').disabled = false;
+        document.getElementById('sendCommand').disabled = false;
+        document.getElementById('terminal').disabled = false;
         document.getElementById('availability').disabled = false;
         document.getElementById('reset').disabled = false;
         document.getElementById('powerSwitch').disabled = false;
