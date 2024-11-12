@@ -64,8 +64,6 @@ document.getElementById('reset').addEventListener('click', async () => {
     const encoder = new TextEncoder();
     const data = encoder.encode('reset');
     await characteristic.writeValue(data);
-    document.getElementById('status').textContent = 'Disconnected';
-    document.getElementById('status').style.color = 'red';
 });
 
 document.getElementById('powerSwitch').addEventListener('change', async (event) => {
