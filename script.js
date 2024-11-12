@@ -77,11 +77,11 @@ document.getElementById('powerSwitch').addEventListener('change', async (event) 
 });
 
 document.getElementById('multicolorSwitch').addEventListener('change', async (event) => {
-    let command = event.target.checked ? 'on' : 'off';
+    let command = event.target.checked ? 'multicolor:on' : 'multicolor:off';
     let encoder = new TextEncoder();
     let data = encoder.encode(command);
     await characteristic.writeValue(data);
-    document.getElementById('multicolorLabel').textContent = `Multicolor: ${command}`;
+    document.getElementById('multicolorLabel').textContent = `${command}`;
 });
 
 document.getElementById('brightnessSlider').addEventListener('input', async (event) => {
