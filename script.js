@@ -79,7 +79,7 @@ document.getElementById('multicolorSwitch').addEventListener('change', async (ev
     let encoder = new TextEncoder();
     let data = encoder.encode(command);
     await characteristic.writeValue(data);
-    document.getElementById('multicolorLabel').textContent = `${command}`;
+    document.getElementById('multicolorLabel').textContent = `-${command}`;
 });
 
 document.getElementById('brightnessSlider').addEventListener('input', async (event) => {
