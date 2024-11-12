@@ -64,6 +64,8 @@ document.getElementById('reset').addEventListener('click', async () => {
     const encoder = new TextEncoder();
     const data = encoder.encode('reset');
     await characteristic.writeValue(data);
+    document.getElementById('status').textContent = 'Disconnected';
+    document.getElementById('status').style.color = 'red';
 });
 
 document.getElementById('powerSwitch').addEventListener('change', async (event) => {
@@ -75,7 +77,7 @@ document.getElementById('powerSwitch').addEventListener('change', async (event) 
 });
 
 document.getElementById('multicolorSwitch').addEventListener('change', async (event) => {
-    let command = event.target.checked ? 'multicolor:on' : 'multicolor:off';
+    let command = event.target.checked ? 'on' : 'off';
     let encoder = new TextEncoder();
     let data = encoder.encode(command);
     await characteristic.writeValue(data);
